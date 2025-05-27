@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carta para Chumarita</title>
+
+  <!-- Bootstrap 5.3 CSS desde CDN oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #a8edea, #fed6e3);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    .envelope-wrapper {
+      perspective: 1000px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1rem;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background: #a8edea;
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .envelope h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #00695c;
+      z-index: 2;
+    }
+
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #7de2fc;
+      border-radius: 15px;
+      clip-path: polygon(0 0, 100% 0, 50% 60%);
+      z-index: 3;
+      transition: transform 0.8s ease;
+      transform-origin: top;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .letter-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      padding: 2rem;
+      transform: scale(0);
+      transition: transform 0.6s ease;
+      z-index: 5;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .letter-content.show {
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+      animation: unfold 0.6s ease;
+    }
+
+    @keyframes unfold {
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .letter-content h4 {
+      color: #00897b;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .letter-content p {
+      color: #333;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .firma {
+      text-align: right;
+      font-style: italic;
+      margin-top: 2rem;
+      color: #00796b;
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #00796b;
+      z-index: 10;
+    }
+
+    .polaroid {
+      background: white;
+      padding: 10px 10px 25px;
+      border: 1px solid #ccc;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+      margin-bottom: 2rem;
+      max-width: 300px;
+      width: 100%;
+      text-align: center;
+      transform: rotate(-1deg);
+      box-sizing: border-box;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .polaroid .caption {
+      font-size: 0.95rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 576px) {
+      .envelope {
+        width: 90vw;
+        height: 180px;
+      }
+
+      .letter-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .letter-content p {
+        font-size: 1rem;
+      }
+
+      .polaroid {
+        max-width: 100%;
+        width: 100%;
+        padding: 8px 8px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope-wrapper" onclick="openEnvelope()">
+    <div class="envelope" id="envelope">
+      <h3>Para chumarita</h3>
+      <div class="flap"></div>
+    </div>
+  </div>
+
+  <div class="letter-content" id="letter">
+    <button class="btn-close" onclick="closeEnvelope(event)">✖</button>
+
+    <div class="polaroid">
+      <img src="carcosita.jpeg" alt="Foto especial" />
+        <div class="caption">donde salen tus mocos</div>
+    </div>
+
+    <h4>Querida chumarita</h4>
+        <p>
+        mi amor, carcosita, mongolita, marranita, mi mujer hermosa, te amo mucho, no quiero perderte por nada, eres lo mejor que me pudo haber pasado, eres una persona muy especial para mí y no quisiera perderte nunca, quiero que podamos cumplir todas nuestras metas, siempre me esforzaré más por nosotros, no sé qué haría sin ti, no dejaré de luchar por ti siempre porque como te dije me salvaste de cierto modo, te amo un montón, sanemos poco a poco y lo más importante: juntos. Sé que podemos aunque nos sea difícil, nunca dejaré de estar a tu lado, seré tu soporte para todo, te amo en serio un montón. Gracias por tanto, perdón por tan poco, mi amor.
+        </p>
+        <p class="firma">Con amor, tu mongolito</p>
+  </div>
+
+  <script>
+    function openEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const letter = document.getElementById('letter');
+      envelope.classList.add('open');
+
+      setTimeout(() => {
+        letter.classList.add('show');
+      }, 500);
+    }
+
+    function closeEnvelope(event) {
+      event.stopPropagation();
+      const envelope = document.getElementById('envelope');
+      const letter = document.getElementById('letter');
+      letter.classList.remove('show');
+      setTimeout(() => {
+        envelope.classList.remove('open');
+      }, 600);
+    }
+  </script>
+</body>
+</html>
